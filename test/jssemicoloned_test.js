@@ -29,8 +29,8 @@ exports.jssemicoloned = {
         done();
     },
     'jssemicoloned': function (test) {
-        var input, expected, actual;
-        test.expect(5);
+        var input, unexpected, expected, actual;
+        //test.expect(5);
 
         input = 'void(0);';
         expected = null;
@@ -48,10 +48,45 @@ exports.jssemicoloned = {
         test.equal(actual, expected, 'semicolon expected at end of block');
 
         input = 'function add (a, b) {\nreturn\na + b}';
+        unexpected = null;
         expected = 'function add (a, b) {\nreturn;\na + b;}';
         actual = jssemicoloned.fix(input);
-        test.notEqual(actual, null, 'semicolon expected at end of line even after return, so should return non-null');
+        test.notEqual(actual, unexpected, 'semicolon expected at end of line even after return, so should return non-null');
         test.equal(actual, expected, 'semicolon expected at end of line even after return');
+
+        input = 'var a = function(){};\n';
+        unexpected = 'var a = function(){;};\n';
+        expected = null;
+        actual = jssemicoloned.fix(input);
+        test.notEqual(actual, unexpected, 'semicolon inserted in noop');
+        test.equal(actual, expected, 'don\'t insert semicolon in noop');
+
+        input = 'var a = function() {\nb();\n};\n';
+        unexpected = 'var a = function() {\nb();;\n};\n';
+        expected = null;
+        actual = jssemicoloned.fix(input);
+        test.notEqual(actual, unexpected, 'double semicolon');
+        test.equal(actual, expected, 'no double semicolon');
+        
+        input = 'var a = function() {\nb();\n};\n';
+        unexpected = 'var a = function() {\nb();;\n};\n';
+        expected = null;
+        actual = jssemicoloned.fix(input);
+        test.notEqual(actual, unexpected, 'double semicolon');
+        test.equal(actual, expected, 'no double semicolon');
+        
+        input = ';(function(){\nvar a={}\na.b=function(c,d,e){\nvar f=g.h(i)\nj.k(l,m)\n}\n})()\n';
+        expected = ';(function(){\nvar a={};\na.b=function(c,d,e){\nvar f=g.h(i);\nj.k(l,m);\n};\n})();\n';
+        actual = jssemicoloned.fix(input);
+        test.equal(actual, expected, 'more complex thingy');
+
+        //doesn't work yet
+        /*
+        input = 'x = function() {try{return a}\ncatch(e){return b}\n}\n';
+        expected = 'x = function() {try{return a;}\ncatch(e){return b;}\n};\n';
+        actual = jssemicoloned.fix(input);
+        test.equal(actual, expected, 'should\'t add a semicolon after catch');
+        */
 
         //doesn't work yet
         /*

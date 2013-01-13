@@ -2,7 +2,7 @@
 
 This is a [Grunt](http://gruntjs.com) task to validate JavaScript source.
 It uses [Esprima](http://esprima.org) to look for possible syntax
-errors and atuomatically insert missing semicolons.
+errors and automatically inserts missing semicolons.
 
 ## How to Use It
 

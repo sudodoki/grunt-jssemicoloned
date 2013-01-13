@@ -1,0 +1,36 @@
+# backup files
+*.bak
+*.old
+*~
+
+# windows
+Thumbs.db
+thumbs.db
+
+# mac
+.DS_Store
+
+# intellij
+*.iml
+
+# vim
+*.swp
+
+# dreamweaver
+_notes/
+
+# eclipse
+.refactorings/
+.settings/
+.classpath
+.project
+
+# intellij
+.idea/
+
+# netbeans
+nbproject/
+
+# npm
+npm-debug.log
+node_modules/

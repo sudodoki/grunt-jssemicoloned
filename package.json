@@ -1,7 +1,7 @@
 {
   "name": "grunt-jssemicoloned",
   "description": "Insert semicolons into JavaScript source.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/Crydust/grunt-jssemicoloned",
   "author": "Kristof Neirynck",
   "repository": {
@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "main": "grunt.js",
-  "bin": "bin/grunt-semicoloned",
+  "bin": "bin/grunt-jssemicoloned",
   "engines": {
     "node": "*"
   },

@@ -30,7 +30,7 @@ exports.jssemicoloned = {
     },
     'jssemicoloned': function (test) {
         var input, unexpected, expected, actual;
-        //test.expect(5);
+        test.expect(14);
 
         input = 'void(0);';
         expected = null;
@@ -80,21 +80,15 @@ exports.jssemicoloned = {
         actual = jssemicoloned.fix(input);
         test.equal(actual, expected, 'more complex thingy');
 
-        //doesn't work yet
-        /*
         input = 'x = function() {try{return a}\ncatch(e){return b}\n}\n';
         expected = 'x = function() {try{return a;}\ncatch(e){return b;}\n};\n';
         actual = jssemicoloned.fix(input);
         test.equal(actual, expected, 'should\'t add a semicolon after catch');
-        */
 
-        //doesn't work yet
-        /*
         input = 'void(0)';
         expected = 'void(0);';
         actual = jssemicoloned.fix(input, 'semicolon expected before EOF');
         test.equal(actual, expected);
-        */
 
         test.done();
     }

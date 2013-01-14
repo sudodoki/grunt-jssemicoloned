@@ -1,7 +1,7 @@
-# grunt-jsvalidate
+# grunt-jssemicoloned
 
 This is a [Grunt](http://gruntjs.com) task to validate JavaScript source.
-It uses [Esprima](http://esprima.org) to look for possible syntax
+It uses [Acorn](http://marijnhaverbeke.nl/acorn/) to look for possible syntax
 errors and automatically inserts missing semicolons.
 
 ## How to Use It

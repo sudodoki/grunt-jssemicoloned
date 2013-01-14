@@ -1,8 +1,29 @@
 'use strict';
-var esprima = require('esprima');
+var acorn = require('acorn');
 
 exports.init = function (grunt) {
     var exports = {};
+
+    function _insertSemicolons(source, semicolonInserts) {
+        var injectedSource = [],
+            scIndex,
+            injectPoint,
+            scCounter = 0,
+            scPrevChar;
+        for (scIndex = 0; scIndex < semicolonInserts.length; scIndex++) {
+            injectPoint = semicolonInserts[scIndex];
+            if (injectPoint != scCounter) {
+                scPrevChar = source.charAt(injectPoint - 1);
+                injectedSource.push(source.substring(scCounter, injectPoint));
+                if (scPrevChar !== '{' && scPrevChar !== ';') {
+                    injectedSource.push(';');
+                }
+                scCounter = injectPoint;
+            }
+        }
+        injectedSource.push(source.substring(scCounter, source.length));
+        return injectedSource.join('');
+    }
 
     exports.fix = function (src, options, globals, extraMsg) {
         var exports = {}, syntax, semicoloned;
@@ -14,21 +35,13 @@ exports.init = function (grunt) {
             if (src[0] === '#' && src[1] === '!') {
                 grunt.log.ok('Skipped');
             } else {
-                syntax = esprima.parse(src, { tolerant: true });
-                if (syntax.errors.length === 0) {
-                    semicoloned = syntax.semicoloned;
-                    if (semicoloned !== src) {
-                        grunt.log.ok('Fixed');
-                        return semicoloned;
-                    } else {
-                        grunt.log.ok();
-                        return null;
-                    }
+                syntax = acorn.parse(src);
+                semicoloned = _insertSemicolons(src, syntax.semicolonInserts);
+                if (semicoloned !== src) {
+                    grunt.log.ok('Fixed');
+                    return semicoloned;
                 } else {
-                    grunt.log.write('\n');
-                    syntax.errors.forEach(function (e) {
-                        grunt.log.error(e.message);
-                    });
+                    grunt.log.ok();
                     return null;
                 }
             }

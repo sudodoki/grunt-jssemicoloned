@@ -8,7 +8,8 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('jssemicoloned', 'Insert semicolons into JavaScript source.', function () {
         var options = {}, globals = {};
 
-        grunt.file.expandFiles(this.file.src).forEach(function (filepath) {
+
+        grunt.file.expand(this.filesSrc).forEach(function (filepath) {
             grunt.verbose.write('jssemicoloned ' + filepath);
             var result = jssemicoloned.fix(grunt.file.read(filepath), options, globals, filepath);
             if (result !== null && typeof result === 'string') {

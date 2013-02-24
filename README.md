@@ -10,7 +10,7 @@ First, install the [package](https://npmjs.org/package/grunt-jssemicoloned):
 
     npm install grunt-jssemicoloned
 
-Modify your `grunt.js` file to have the following line somewhere:
+Modify your `Gruntfile.js` file to have the following line somewhere:
 
 ```javascript
 grunt.loadNpmTasks('grunt-jssemicoloned');

@@ -2,7 +2,6 @@
 var acorn = require('acorn');
 
 exports.init = function (grunt) {
-    var exports = {};
 
     function _insertSemicolons(source, semicolonInserts) {
         var injectedSource = [],
@@ -12,12 +11,9 @@ exports.init = function (grunt) {
             scPrevChar;
         for (scIndex = 0; scIndex < semicolonInserts.length; scIndex++) {
             injectPoint = semicolonInserts[scIndex];
-            if (injectPoint != scCounter) {
+            if (injectPoint !== scCounter) {
                 scPrevChar = source.charAt(injectPoint - 1);
-                injectedSource.push(source.substring(scCounter, injectPoint));
-                if (scPrevChar !== '{' && scPrevChar !== ';') {
-                    injectedSource.push(';');
-                }
+                injectedSource.push(source.substring(scCounter, injectPoint), ';');
                 scCounter = injectPoint;
             }
         }
@@ -26,7 +22,7 @@ exports.init = function (grunt) {
     }
 
     exports.fix = function (src, options, globals, extraMsg) {
-        var exports = {}, syntax, semicoloned;
+        var syntax, semicoloned;
 
         grunt.log.write('Adding semicolons' + (extraMsg ? ' ' + extraMsg : '') + '  ');
         

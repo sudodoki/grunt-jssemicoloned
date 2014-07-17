@@ -24,20 +24,20 @@ exports.init = function (grunt) {
     exports.fix = function (src, options, globals, extraMsg) {
         var syntax, semicoloned;
 
-        grunt.log.write('Adding semicolons' + (extraMsg ? ' ' + extraMsg : '') + '  ');
+        grunt.verbose.write('Adding semicolons' + (extraMsg ? ' ' + extraMsg : '') + '  ');
         
         try {
             // Skip shebang.
             if (src[0] === '#' && src[1] === '!') {
-                grunt.log.ok('Skipped');
+                grunt.verbose.ok('Skipped');
             } else {
                 syntax = acorn.parse(src);
                 semicoloned = _insertSemicolons(src, syntax.semicolonInserts);
                 if (semicoloned !== src) {
-                    grunt.log.ok('Fixed');
+                    grunt.verbose.ok('Fixed');
                     return semicoloned;
                 } else {
-                    grunt.log.ok();
+                    grunt.verbose.ok();
                     return null;
                 }
             }

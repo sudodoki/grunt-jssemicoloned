@@ -25,7 +25,7 @@ exports.init = function (grunt) {
         var syntax, semicoloned;
 
         grunt.log.write('Adding semicolons' + (extraMsg ? ' ' + extraMsg : '') + '  ');
-        
+
         try {
             // Skip shebang.
             if (src[0] === '#' && src[1] === '!') {
@@ -46,9 +46,9 @@ exports.init = function (grunt) {
             grunt.log.error(e.message);
             grunt.fail.errorcount++;
         }
-        
+
     };
-    
-    
+
+
     return exports;
 };
